@@ -84,14 +84,14 @@ module <%= @module_name %>
 
   private_class_method :default_options, :custom_options
 
-  # <%= @description %>
+  # <%= @description.to_s.gsub("\n", "\n  # ") %>
   class Client
     def initialize(client)
       @client = client
     end
     <% for resource in @resources %>
 
-    # <%= resource.description %>
+    # <%= resource.description.to_s.gsub("\n", "\n    # ") %>
     #
     # @return [<%= resource.class_name %>]
     def <%= resource.name %>
@@ -103,18 +103,18 @@ module <%= @module_name %>
   private
   <% for resource in @resources %>
 
-  # <%= resource.description %>
+  # <%= resource.description.to_s.gsub("\n", "\n  # ") %>
   class <%= resource.class_name %>
     def initialize(client)
       @client = client
     end
     <% for link in resource.links %>
 
-    # <%= link.description %>
+    # <%= link.description.to_s.gsub("\n", "\n    # ") %>
     <% unless link.parameters.empty? %>
     #
     <% for parameter in link.parameters %>
-    # @param <%= parameter.name %>: <%= parameter.description %>
+    # @param <%= parameter.name %>: <%= parameter.description.to_s.gsub("\n", "\n    # ") %>
     <% end %>
     <% end %>
     def <%= link.name %>(<%= link.parameter_names %>)
